@@ -29,7 +29,12 @@ const chartOptions = {
         width: 1
     },
     legend: {
-        show: false
+        show: true,
+        horizontalAlign: 'left', 
+        position: 'bottom',
+        onItemClick: {
+          toggleDataSeries: false
+      },
     },
     title: {
         text: 'Project Forcasty',
