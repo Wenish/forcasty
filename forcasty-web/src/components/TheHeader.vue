@@ -13,7 +13,7 @@
                         <img src="../assets/user.png" />
                     </div>
                 </label>
-                <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                <ul tabindex="0" class="mt-3 z-20 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                     <li>
                         <a class="justify-between">
                             Profile
