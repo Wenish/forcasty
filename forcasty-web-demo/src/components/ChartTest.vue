@@ -52,7 +52,6 @@ const chartOptions = {
     },
     yaxis: [
         {
-            seriesName: 'Complexity',
             labels: {
                 style: {
                     colors: '#008FFB',
@@ -63,9 +62,6 @@ const chartOptions = {
                 style: {
                     color: '#008FFB',
                 }
-            },
-            tooltip: {
-                enabled: true
             }
         },
     ],
