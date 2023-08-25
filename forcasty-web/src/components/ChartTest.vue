@@ -12,14 +12,15 @@ const chartOptions = {
         stacked: false,
         zoom: {
             enabled: false
-        }
+        },
+        foreColor: 'currentColor'
     },
     dataLabels: {
         enabled: true,
         enabledOnSeries: [0, 1],
         style: {
             fontSize: '0.75rem',
-            fontWeight: 'bold',
+            fontWeight: 'bold'
         },
     },
     tooltip: {
@@ -57,16 +58,8 @@ const chartOptions = {
     },
     yaxis: [
         {
-            labels: {
-                style: {
-                    colors: '#008FFB',
-                }
-            },
             title: {
                 text: "Complexity",
-                style: {
-                    color: '#008FFB',
-                }
             }
         },
     ],
@@ -85,7 +78,7 @@ const series = [{
 }, {
     name: 'Done',
     type: 'column',
-    data: [null, 10, 21, 29, 40]
+    data: [0, 10, 21, 29, 40]
 }, {
     name: 'Scope',
     type: 'line',
