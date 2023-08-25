@@ -1,6 +1,5 @@
 <template>
     <div>
-        Page Home
         <ChartTest />
     </div>
 </template>
