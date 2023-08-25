@@ -1,11 +1,6 @@
 <template>
     <div>
-        <VueApexCharts 
-            width="500"
-            type="bar"
-            :options="chartOptions"
-            :series="series"
-        />
+        <VueApexCharts width="100%" height="500" type="line" :options="chartOptions" :series="series" />
     </div>
 </template>
 <script setup lang="ts">
@@ -13,10 +8,36 @@ import VueApexCharts from "vue3-apexcharts";
 
 const chartOptions = {
     chart: {
-        id: "vuechart-example",
+        type: 'line',
+        stacked: false,
+        zoom: {
+            enabled: false
+        }
+    },
+    dataLabels: {
+        enabled: true,
+        enabledOnSeries: [0, 1],
+        style: {
+            fontSize: '0.75rem',
+            fontWeight: 'bold',
+        },
+    },
+    tooltip: {
+        enabled: false,
+    },
+    stroke: {
+        width: 1
+    },
+    legend: {
+        show: false
+    },
+    title: {
+        text: 'Project Forcasty',
+        align: 'left'
     },
     xaxis: {
         categories: [
+            'Sprint 0',
             'Sprint 1',
             'Sprint 2',
             'Sprint 3',
@@ -27,22 +48,52 @@ const chartOptions = {
             'Sprint 8',
             'Sprint 9',
             'Sprint 10',
-            'Sprint 11',
-            'Sprint 12',
-            'Sprint 13',
         ],
     },
+    yaxis: [
+        {
+            seriesName: 'Complexity',
+            labels: {
+                style: {
+                    colors: '#008FFB',
+                }
+            },
+            title: {
+                text: "Complexity",
+                style: {
+                    color: '#008FFB',
+                }
+            },
+            tooltip: {
+                enabled: true
+            }
+        },
+    ],
+    plotOptions: {
+        bar: {
+            columnWidth: 10
+        }
+    },
+    colors: ['#06b6d4', '#22c55e']
 }
 
-const series = [
-    {
-        name: "Complexity",
-        data: [90, 92, 93, 95, 100, 102, 104, 105],
-    },
-    {
-        name: "Done",
-        data: [7, 11, 15, 20, 24, 30, 35, 39],
-    },
+const series = [{
+    name: 'Complexity',
+    type: 'column',
+    data: [70, 71, 72, 73, 74]
+}, {
+    name: 'Done',
+    type: 'column',
+    data: [null, 10, 21, 29, 40]
+}, {
+    name: 'Scope',
+    type: 'line',
+    data: [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80]
+},
+{
+    name: 'Progress',
+    type: 'line',
+    data: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+}
 ]
-
 </script>
