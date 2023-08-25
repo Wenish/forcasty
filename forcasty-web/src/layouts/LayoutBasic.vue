@@ -1,13 +1,13 @@
 <template>
-    <div>
-        <header>
-            Header
-        </header>
+    <div class="grid min-h-screen grid-rows-[auto_1fr_auto]">
+        <TheHeader />
         <main>
             <RouterView />
         </main>
-        <footer>
-            Footer
-        </footer>
+        <TheFooter />
     </div>
 </template>
+<script setup lang="ts">
+import TheHeader from '../components/TheHeader.vue'
+import TheFooter from '../components/TheFooter.vue'
+</script>
