@@ -105,6 +105,29 @@ export const projectsMock = {
         ]
 
     },
+    '4': {
+        _id: '4',
+        name: 'Albatros',
+        timeline: [
+            {
+                effort: 90,
+                done: 0
+            },
+            {
+                effort: 90,
+                done: 8
+            },
+            {
+                effort: 90,
+                done: 14
+            },
+            {
+                effort: 92,
+                done: 27
+            }
+        ]
+
+    },
     '423': {
         _id: '423',
         name: 'B2Rail',

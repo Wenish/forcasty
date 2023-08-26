@@ -45,7 +45,7 @@ const dataEffort = computed(() => {
 })
 
 const dataEffortAverageIncrease = computed(() => {
-    return calculateAverageIncrease(dataEffort.value)
+    return round(calculateAverageIncrease(dataEffort.value), 1)
 })
 
 const dataDone = computed(() => {
@@ -53,7 +53,7 @@ const dataDone = computed(() => {
 })
 
 const dataDoneAverageIncrease = computed(() => {
-    return calculateAverageIncrease(dataDone.value)
+    return round(calculateAverageIncrease(dataDone.value), 1)
 })
 
 const canProjectBeFinished = computed(() => {
@@ -76,8 +76,8 @@ const dataPrediction = computed(() => {
     const generatePrediction = () => {
         const lastPrediction = prediction[prediction.length - 1]
         prediction.push({
-            effort: lastPrediction.effort + dataEffortAverageIncrease.value,
-            done: lastPrediction.done + dataDoneAverageIncrease.value
+            effort: round(lastPrediction.effort + dataEffortAverageIncrease.value, 1),
+            done: round(lastPrediction.done + dataDoneAverageIncrease.value, 1)
         })
     }
 
@@ -194,5 +194,10 @@ function calculateAverageIncrease(data: number[]): number {
 
     const averageIncrease = totalIncrease / (data.length - 1);
     return averageIncrease;
+}
+
+function round(value: number, precision: number) {
+    var multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
 }
 </script>
