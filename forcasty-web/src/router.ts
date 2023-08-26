@@ -14,9 +14,27 @@ const router = createRouter({
       ],
     },
     {
+      path: '/projects/:id',
+      component: () => import('./layouts/LayoutBasic.vue'),
+      children: [
+        {
+          path: '',
+          component: () => import('./pages/PageProject.vue'),
+          props: true,
+        },
+      ],
+    },
+    {
         path: '/:catchAll(.*)',
-        component: () => import('./pages/PageNotFound.vue')
-      },
+        component: () => import('./layouts/LayoutBasic.vue'),
+        children: [
+          {
+            path: '',
+            component: () => import('./pages/PageNotFound.vue'),
+            props: true,
+          },
+        ],
+    },
   ],
 })
 
