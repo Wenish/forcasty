@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, reactive } from "vue";
 import { projectsMock } from "../data/projects.mock";
+import { forcastyApi } from "../api/forcasty.api";
 
 export const useProjectsStore = defineStore('projects', () => {
     const projects = reactive<{
@@ -19,8 +20,7 @@ export const useProjectsStore = defineStore('projects', () => {
     })
 
     const loadProjects = async () => {
-        await new Promise(r => setTimeout(r, 300));
-        const data = projectsMock;
+        const data = await forcastyApi.projects.get();
         Object.assign(projects, structuredClone(data))
     }
 

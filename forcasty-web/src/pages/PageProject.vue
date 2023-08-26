@@ -9,19 +9,18 @@
 </template>
 <script setup lang="ts">
 import { defineAsyncComponent, ref } from 'vue';
-import { projectMock } from "../data/project.mock";
+import { forcastyApi } from '../api/forcasty.api';
 
 const ChartForcast = defineAsyncComponent(() => import('../components/ChartForcast.vue'))
 
-defineProps<{
+const props = defineProps<{
   id: string
 }>()
 
-const project = ref<typeof projectMock>()
+const project = ref<Awaited<ReturnType<typeof forcastyApi.projects.id.get>>>()
 
 const loadProject = async () => {
-    await new Promise(r => setTimeout(r, 100));
-    project.value = projectMock
+    project.value = await forcastyApi.projects.id.get(props.id)
 }
 
 loadProject()

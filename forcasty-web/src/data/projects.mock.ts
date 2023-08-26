@@ -110,24 +110,24 @@ export const projectsMock = {
         name: 'B2Rail',
         timeline: [
             {
-                effort: 50,
+                effort: 10,
                 done: 0
             },
             {
-                effort: 50,
-                done: 2
-            },
-            {
-                effort: 55,
+                effort: 10,
                 done: 4
             },
             {
-                effort: 55,
-                done: 11
+                effort: 15,
+                done: 8
             },
             {
-                effort: 55,
-                done: 14
+                effort: 18,
+                done: 12
+            },
+            {
+                effort: 18,
+                done: 13
             }
         ]
     }
