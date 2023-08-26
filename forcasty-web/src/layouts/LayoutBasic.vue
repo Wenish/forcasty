@@ -1,6 +1,6 @@
 <template>
     <div class="grid min-h-screen grid-rows-[auto_1fr_auto]">
-        <TheHeader class="w-full max-w-7xl mx-auto" />
+        <TheHeader class="w-full max-w-7xl mx-auto sticky top-0 z-50 border-b border-secondary" />
         <main class="w-full max-w-7xl mx-auto p-0 md:p-4 lg:p-8">
             <RouterView />
         </main>
