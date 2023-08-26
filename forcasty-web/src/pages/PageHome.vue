@@ -1,14 +1,20 @@
 <template>
     <div>
-        <ProjectsListe :list="projectsStore.projectsArray" />
+        <ProjectsListe v-if="projects" :list="projects" />
     </div>
 </template>
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue'
-import { useProjectsStore } from '../stores/projects.store';
+import { defineAsyncComponent, ref } from 'vue'
+import { forcastyApi } from '../api/forcasty.api';
 
 const ProjectsListe = defineAsyncComponent(() => import('../components/ProjectsList.vue'))
 
-const projectsStore = useProjectsStore()
-projectsStore.loadProjects()
+const projects = ref<Awaited<ReturnType<typeof forcastyApi.projects.get>>>()
+
+const loadProjects = async () => {
+    const data = await forcastyApi.projects.get();
+    projects.value = data
+}
+
+loadProjects()
 </script>

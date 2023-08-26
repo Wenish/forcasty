@@ -6,8 +6,8 @@ export const forcastyApi = {
     projects: {
         get: async () => {
             await new Promise(r => setTimeout(r, 150));
-            const data = projectsMockData
-            return projectsMockData
+            const data = Object.entries(projectsMockData).map(value => value[1])
+            return data
         },
         id: {
             get: async (id: string) => {
