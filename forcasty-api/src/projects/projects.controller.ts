@@ -6,12 +6,16 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ProjectCreateDto } from './dtos/projectCreate.dto';
 import { ProjectsService } from './projects.service';
-import { Project } from 'src/database/schemas/project.schema';
+import { Project, ProjectDocument } from 'src/database/schemas/project.schema';
 import { ParseObjectIdPipe } from 'src/pipes/parseObjectId.pipe';
 import { ProjectPatchDto } from './dtos/projectPatch.dto';
+import { ProjectFilterDto } from './dtos/projectFilter.dto';
+import { ApiQuery } from '@nestjs/swagger';
+import { FilterQuery } from 'mongoose';
 
 @Controller('projects')
 export class ProjectsController {
@@ -24,8 +28,18 @@ export class ProjectsController {
   }
 
   @Get()
-  async get() {
-    const result = await this.projectsService.findAll();
+  @ApiQuery({
+    name: 'owner',
+    type: String,
+    required: false,
+    description: 'userId from the owner of the project',
+  })
+  async get(@Query() query: ProjectFilterDto) {
+    const filterQuery: FilterQuery<ProjectDocument> = {};
+    if (query.owner) {
+      filterQuery.owner = query.owner;
+    }
+    const result = await this.projectsService.findAll(filterQuery);
     return result as Project[];
   }
 
