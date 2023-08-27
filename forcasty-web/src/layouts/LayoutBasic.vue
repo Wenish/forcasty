@@ -1,7 +1,7 @@
 <template>
     <div class="grid min-h-screen grid-rows-[auto_1fr_auto]">
         <TheHeader class="w-full max-w-7xl mx-auto sticky top-0 z-50 border-b border-secondary" />
-        <main class="w-full max-w-7xl mx-auto px-0 py-4 md:p-4 lg:p-8 transition-all">
+        <main class="w-full max-w-7xl mx-auto px-2 py-4 md:p-4 lg:p-8 transition-all">
             <RouterView />
         </main>
         <TheFooter class="w-full max-w-7xl mx-auto" />

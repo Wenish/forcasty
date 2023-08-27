@@ -1,8 +1,10 @@
 <template>
     <div>
-        <div v-if="!isLoading">
-            <h1 class="font-bold text-4xl">Project: {{ project?.name }}</h1>
-            <div class="font-bold text-sm">id: {{ id }}</div>
+        <div v-if="!isLoading" class="grid gap-4">
+            <div>
+                <h1 class="font-bold text-4xl">Project: {{ project?.name }}</h1>
+                <div class="font-bold text-sm">id: {{ id }}</div>
+            </div>
             <ChartForcast v-if="project?.timeline" :data="project?.timeline" />
             <div class="flex gap-2">
                 <ButtonDelete :onDelete="onDelete">Delete Project</ButtonDelete>

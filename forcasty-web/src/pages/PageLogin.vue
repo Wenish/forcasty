@@ -17,6 +17,7 @@ const firebaseAuthContainer = ref()
 const router = useRouter()
 
 const uiConfig: firebaseui.auth.Config = {
+  signInFlow: 'popup',
   signInOptions: [
     GoogleAuthProvider.PROVIDER_ID,
     EmailAuthProvider.PROVIDER_ID,

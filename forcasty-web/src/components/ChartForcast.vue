@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <div class="p-4 w-full overflow-hidden">
+        <div class="w-full overflow-hidden">
             <VueApexCharts width="100%" height="400" type="line" :options="chartOptions" :series="series" />
         </div>
     </div>
