@@ -1,20 +1,50 @@
-import { projectsMock } from "../data/projects.mock";
+import axios from 'axios'
 
-const projectsMockData = projectsMock;
+const baseUrl = `${import.meta.env.VITE_FORCASTY_API_HOST}/projects`
 
 export const forcastyApi = {
     projects: {
+        post: async (body: ProjectCreateDto) => {
+            const url = `${baseUrl}`
+            const { data } = await axios.post<ProjectCreateDto>(url, body)
+              return data
+        },
         get: async () => {
-            await new Promise(r => setTimeout(r, 150));
-            const data = Object.entries(projectsMockData).map(value => value[1])
+            const url = `${baseUrl}`
+            const { data } = await axios.get<ProjectsResponseDto>(url)
             return data
         },
         id: {
             get: async (id: string) => {
-                await new Promise(r => setTimeout(r, 150));
-                const data = Object.entries(projectsMockData).find(value => value[1]._id == id)?.[1]
+                const { data } = await axios.get<Project>(`${baseUrl}/${id}`)
                 return data
             }
         }
     }
+}
+
+export type Timeline = {
+    effort: number
+    done: number
+}
+
+export type ProjectCreateDto = {
+    owner: string
+    name: string
+    timeline: Timeline[]
+}
+
+export type Project = {
+    _id: string
+    __v: string
+    createdAt: string
+    updatedAt: string
+    owner: string
+    name: string
+    timeline: Timeline[]
+}
+
+export type ProjectsResponseDto = {
+    results: Project[]
+    count: number
 }

@@ -5,15 +5,15 @@
 </template>
 <script setup lang="ts">
 import { defineAsyncComponent, ref } from 'vue'
-import { forcastyApi } from '../api/forcasty.api';
+import { Project, forcastyApi } from '../api/forcasty.api';
 
 const ProjectsListe = defineAsyncComponent(() => import('../components/ProjectsList.vue'))
 
-const projects = ref<Awaited<ReturnType<typeof forcastyApi.projects.get>>>()
+const projects = ref<Project[]>()
 
 const loadProjects = async () => {
     const data = await forcastyApi.projects.get();
-    projects.value = data
+    projects.value = data.results
 }
 
 loadProjects()
