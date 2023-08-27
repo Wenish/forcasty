@@ -75,10 +75,7 @@ onUnmounted(() => {
 }
 :deep(.firebaseui-textfield input) {
   outline-width: 0 !important;
-  -webkit-appearance: none !important;
-  box-shadow: none !important;
-  -moz-box-shadow: none !important;
-  -webkit-box-shadow: none !important;
+  appearance: none !important;
 }
 
 :deep(.firebaseui-id-submit) {
