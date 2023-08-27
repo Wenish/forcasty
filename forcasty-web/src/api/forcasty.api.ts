@@ -6,7 +6,7 @@ export const forcastyApi = {
     projects: {
         post: async (body: ProjectCreateDto) => {
             const url = `${baseUrl}`
-            const { data } = await axios.post<ProjectCreateDto>(url, body)
+            const { data } = await axios.post<Project>(url, body)
               return data
         },
         get: async () => {
