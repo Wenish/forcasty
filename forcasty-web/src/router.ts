@@ -1,3 +1,4 @@
+import { getAuth } from 'firebase/auth'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -10,6 +11,9 @@ const router = createRouter({
         {
           path: '',
           component: () => import('./pages/PageHome.vue'),
+          meta: {
+            requiresAuth: true
+          }
         },
       ],
     },
@@ -20,9 +24,39 @@ const router = createRouter({
         {
           path: '',
           component: () => import('./pages/PageProject.vue'),
+          meta: {
+            requiresAuth: true
+          },
           props: true,
         },
       ],
+    },
+    {
+      path: '/login',
+      component: () => import('./layouts/LayoutBasic.vue'),
+      children: [
+        {
+          path: '',
+          component: () => import('./pages/PageLogin.vue'),
+          beforeEnter: (to, from, next) => {
+            const auth = getAuth()
+            if (auth.currentUser) {
+              next('/')
+            } else {
+              next()
+            }
+          },
+        },
+      ],
+    },
+    {
+      path: '/logout',
+      name: 'PageLogout',
+      redirect: () => {
+        const auth = getAuth()
+        auth.signOut()
+        return '/login'
+      },
     },
     {
         path: '/:catchAll(.*)',
@@ -30,12 +64,34 @@ const router = createRouter({
         children: [
           {
             path: '',
-            component: () => import('./pages/PageNotFound.vue'),
-            props: true,
+            component: () => import('./pages/PageNotFound.vue')
           },
         ],
     },
   ],
 })
 
+router.beforeEach((to, from, next) => {
+  const auth = getAuth()
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
+  if (requiresAuth) {
+    if (auth.currentUser) {
+      next()
+    } else {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath },
+      })
+    }
+  } else {
+    next()
+  }
+})
+
 export default router
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    requiresAuth?: boolean
+  }
+}
