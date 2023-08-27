@@ -13,7 +13,7 @@ const projects = ref<Project[]>()
 
 const loadProjects = async () => {
     const data = await forcastyApi.projects.get();
-    projects.value = data.results
+    projects.value = data
 }
 
 loadProjects()

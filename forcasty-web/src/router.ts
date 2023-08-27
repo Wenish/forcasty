@@ -18,6 +18,19 @@ const router = createRouter({
       ],
     },
     {
+      path: '/project-new',
+      component: () => import('./layouts/LayoutBasic.vue'),
+      children: [
+        {
+          path: '',
+          component: () => import('./pages/PageProjectNew.vue'),
+          meta: {
+            requiresAuth: true
+          }
+        },
+      ],
+    },
+    {
       path: '/projects/:id',
       component: () => import('./layouts/LayoutBasic.vue'),
       children: [

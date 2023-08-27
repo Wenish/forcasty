@@ -40,10 +40,7 @@ export class ProjectsService {
       .skip(options.skip)
       .limit(options.limit)
       .sort({ [options.sortField]: options.sortType });
-
-    return {
-      results: await mongoQuery.exec(),
-      count: await this.projectModel.find(query).count().exec(),
-    };
+    
+    return await mongoQuery.exec()
   }
 }

@@ -2,7 +2,6 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ProjectCreateDto } from './dtos/projectCreate.dto';
 import { ProjectsService } from './projects.service';
 import { Project } from 'src/database/schemas/project.schema';
-import { ProjectsResponseDto } from './dtos/projectsResponse.dto';
 
 @Controller('projects')
 export class ProjectsController {
@@ -17,7 +16,7 @@ export class ProjectsController {
   @Get()
   async get() {
     const result = await this.projectsService.findAll();
-    return result as ProjectsResponseDto;
+    return result as Project[];
   }
 
   @Get(':id')

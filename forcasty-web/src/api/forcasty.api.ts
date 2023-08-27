@@ -11,7 +11,7 @@ export const forcastyApi = {
         },
         get: async () => {
             const url = `${baseUrl}`
-            const { data } = await axios.get<ProjectsResponseDto>(url)
+            const { data } = await axios.get<Project[]>(url)
             return data
         },
         id: {
@@ -42,9 +42,4 @@ export type Project = {
     owner: string
     name: string
     timeline: Timeline[]
-}
-
-export type ProjectsResponseDto = {
-    results: Project[]
-    count: number
 }
