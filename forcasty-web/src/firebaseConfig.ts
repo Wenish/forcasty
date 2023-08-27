@@ -1,9 +1,9 @@
 export const firebaseConfig = {
-    apiKey: "AIzaSyDtkakPbbBOIVAvxRO08GtrsW8FIESKSBQ",
-    authDomain: "forcasty-client.firebaseapp.com",
-    projectId: "forcasty-client",
-    storageBucket: "forcasty-client.appspot.com",
-    messagingSenderId: "481411812145",
-    appId: "1:481411812145:web:fb73e2d605434faa8f3e10",
-    measurementId: "G-XEZKYH8YVN"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
