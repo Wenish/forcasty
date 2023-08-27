@@ -28,8 +28,8 @@
         </div>
         
         <div class="flex gap-2">
-            <button class="btn btn-sm btn-error" :disabled="!canRemoveTimelineRow || disabled" @click="removeLastTimelineRow">Remove</button>
-            <button class="btn btn-sm btn-success" :disabled="disabled" @click="addTimelineRow">Add</button>
+            <button class="btn btn-sm btn-error" :disabled="!canRemoveTimelineRow || disabled" @click="removeLastTimelineRow">Remove Sprint</button>
+            <button class="btn btn-sm btn-success" :disabled="disabled" @click="addTimelineRow">Add Sprint</button>
         </div>
     </div>
 </template>

@@ -6,7 +6,7 @@
             <button class="btn btn-ghost" :disabled="isSubmitting" @click="resetForm">Reset</button>
             <button class="btn btn-primary" :disabled="isSubmitting" @click="submitForm">
                 <span v-if="isSubmitting"  class="loading loading-spinner"></span>
-                <span>Submit</span>
+                <span>Create Project</span>
                 <IconArrowRight v-if="!isSubmitting" class="h-5 w-5" />
             </button>
         </div>
