@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ProjectCreateDto } from './dtos/projectCreate.dto';
 import { ProjectsService } from './projects.service';
 import { Project } from 'src/database/schemas/project.schema';
@@ -7,7 +15,7 @@ import { ProjectPatchDto } from './dtos/projectPatch.dto';
 
 @Controller('projects')
 export class ProjectsController {
-  constructor(private readonly projectsService: ProjectsService) { }
+  constructor(private readonly projectsService: ProjectsService) {}
 
   @Post()
   async post(@Body() projectCreateDto: ProjectCreateDto) {
@@ -32,10 +40,7 @@ export class ProjectsController {
     @Param('id', ParseObjectIdPipe) id: string,
     @Body() projectPatchDto: ProjectPatchDto,
   ) {
-    const project = await this.projectsService.update(
-      id,
-      projectPatchDto,
-    );
+    const project = await this.projectsService.update(id, projectPatchDto);
     return project as Project;
   }
 

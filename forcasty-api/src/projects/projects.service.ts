@@ -41,8 +41,8 @@ export class ProjectsService {
       .skip(options.skip)
       .limit(options.limit)
       .sort({ [options.sortField]: options.sortType });
-    
-    return await mongoQuery.exec()
+
+    return await mongoQuery.exec();
   }
 
   async update(id: string, projectPatchDto: ProjectPatchDto) {
