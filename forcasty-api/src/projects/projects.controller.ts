@@ -1,11 +1,13 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ProjectCreateDto } from './dtos/projectCreate.dto';
 import { ProjectsService } from './projects.service';
 import { Project } from 'src/database/schemas/project.schema';
+import { ParseObjectIdPipe } from 'src/pipes/parseObjectId.pipe';
+import { ProjectPatchDto } from './dtos/projectPatch.dto';
 
 @Controller('projects')
 export class ProjectsController {
-  constructor(private readonly projectsService: ProjectsService) {}
+  constructor(private readonly projectsService: ProjectsService) { }
 
   @Post()
   async post(@Body() projectCreateDto: ProjectCreateDto) {
@@ -20,7 +22,26 @@ export class ProjectsController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.projectsService.findOne(id);
+  async findOne(@Param('id', ParseObjectIdPipe) id: string) {
+    const project = await this.projectsService.findOne(id);
+    return project as Project;
+  }
+
+  @Patch(':id')
+  async patch(
+    @Param('id', ParseObjectIdPipe) id: string,
+    @Body() projectPatchDto: ProjectPatchDto,
+  ) {
+    const project = await this.projectsService.update(
+      id,
+      projectPatchDto,
+    );
+    return project as Project;
+  }
+
+  @Delete(':id')
+  async remove(@Param('id', ParseObjectIdPipe) id: string) {
+    const project = await this.projectsService.remove(id);
+    return project as Project;
   }
 }

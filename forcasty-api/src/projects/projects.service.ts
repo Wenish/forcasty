@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model, SortOrder } from 'mongoose';
 import { Project, ProjectDocument } from 'src/database/schemas/project.schema';
 import { ProjectCreateDto } from './dtos/projectCreate.dto';
+import { ProjectPatchDto } from './dtos/projectPatch.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -42,5 +43,15 @@ export class ProjectsService {
       .sort({ [options.sortField]: options.sortType });
     
     return await mongoQuery.exec()
+  }
+
+  async update(id: string, projectPatchDto: ProjectPatchDto) {
+    return await this.projectModel.findByIdAndUpdate(id, projectPatchDto, {
+      new: true,
+    });
+  }
+
+  async remove(id: string) {
+    return await this.projectModel.findByIdAndRemove(id);
   }
 }
