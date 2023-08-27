@@ -1,8 +1,23 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { ConfigService } from '@nestjs/config';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+  const configService = app.get<ConfigService>(ConfigService);
+  const port = configService.get('port');
+
+  const config = new DocumentBuilder()
+    .setTitle('forcasty-api')
+    .setVersion('1.0.0')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
+  app.enableCors();
+
+  await app.listen(port);
 }
 bootstrap();
