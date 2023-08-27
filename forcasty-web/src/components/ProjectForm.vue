@@ -7,6 +7,14 @@
             <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-md" :value="name" @input="$emit('update:name', ($event.target as HTMLInputElement).value)" :disabled="disabled" />
         </div>
         <h2 class="font-bold pt-4">Timeline</h2>
+        <div class="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span><b>Effort</b> is the sum of your full Backlog of Stories at that moment of time. This value goes up if you add new Stories to the Backlog and down if you remove Stories from the Backlog.</span>
+        </div>
+        <div class="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span><b>Done</b> is the sum of all closed Storied at that moment of time. So this value should generally increase after each Sprint.</span>
+        </div>
         <div class="grid gap-4">
             <div v-for="(item, index) in timeline" :key="index">
                 <h3 class="font-bold">Sprint {{ index }}</h3>
