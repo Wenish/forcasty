@@ -42,6 +42,14 @@ const router = createRouter({
           },
           props: true,
         },
+        {
+          path: 'edit',
+          component: () => import('./pages/PageProjectEdit.vue'),
+          meta: {
+            requiresAuth: true
+          },
+          props: true,
+        },
       ],
     },
     {
