@@ -7,10 +7,13 @@ export const forcastyApi = {
         post: async (body: ProjectCreateDto) => {
             const url = `${baseUrl}`
             const { data } = await axios.post<Project>(url, body)
-              return data
+            return data
         },
-        get: async () => {
-            const url = `${baseUrl}`
+        get: async (params: ProjectFilterDto = {}) => {
+            const urlWithParams = new URL(baseUrl)
+            urlWithParams.search = objectToSearchParams(params).toString()
+            const url = urlWithParams.toString()
+            
             const { data } = await axios.get<Project[]>(url)
             return data
         },
@@ -31,6 +34,26 @@ export const forcastyApi = {
     }
 }
 
+function objectToSearchParams(params: SearchParams): URLSearchParams {
+    const searchParams = new URLSearchParams()
+    for (const param in params) {
+        if (typeof params[param] === 'object') {
+            // eslint-disable-next-line
+            ; (params[param] as string[]).forEach((item) => {
+                searchParams.append(param, item)
+            })
+        } else {
+            searchParams.append(param, params[param] as string)
+        }
+    }
+    return searchParams
+}
+
+type SearchParams = {
+    [key: string]: string | number | string[]
+}
+
+
 export type Timeline = {
     effort: number
     done: number
@@ -43,6 +66,10 @@ export type ProjectCreateDto = {
 }
 
 export type ProjectPatchDto = Partial<ProjectCreateDto>
+
+export type ProjectFilterDto = {
+    owner?: string
+}
 
 export type Project = {
     _id: string

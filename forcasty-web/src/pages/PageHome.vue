@@ -6,13 +6,18 @@
 <script setup lang="ts">
 import { defineAsyncComponent, ref } from 'vue'
 import { Project, forcastyApi } from '../api/forcasty.api';
+import { getAuth } from 'firebase/auth';
 
 const ProjectsListe = defineAsyncComponent(() => import('../components/ProjectsList.vue'))
+const auth = getAuth()
 
 const projects = ref<Project[]>()
 
+
 const loadProjects = async () => {
-    const data = await forcastyApi.projects.get();
+    const data = await forcastyApi.projects.get({
+        owner: auth.currentUser?.uid
+    });
     projects.value = data
 }
 
