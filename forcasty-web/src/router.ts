@@ -38,7 +38,7 @@ const router = createRouter({
         {
           path: '',
           component: () => import('./pages/PageLogin.vue'),
-          beforeEnter: (to, from, next) => {
+          beforeEnter: (_to, _from, next) => {
             const auth = getAuth()
             if (auth.currentUser) {
               next('/')
@@ -71,7 +71,7 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   const auth = getAuth()
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
   if (requiresAuth) {
