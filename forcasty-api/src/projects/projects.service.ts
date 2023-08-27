@@ -17,6 +17,10 @@ export class ProjectsService {
     return project;
   }
 
+  findOne(id: string) {
+    return this.projectModel.findById(id).exec();
+  }
+
   async findAll(
     query: FilterQuery<ProjectDocument> = {},
     options: {
