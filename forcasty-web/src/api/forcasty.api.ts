@@ -18,7 +18,15 @@ export const forcastyApi = {
             get: async (id: string) => {
                 const { data } = await axios.get<Project>(`${baseUrl}/${id}`)
                 return data
-            }
+            },
+            patch: async (id: string, body: ProjectPatchDto) => {
+                const { data } = await axios.patch<Project>(`${baseUrl}/${id}`, body)
+                return data
+            },
+            delete: async (id: string) => {
+                const { data } = await axios.delete<Project>(`${baseUrl}/${id}`)
+                return data
+            },
         }
     }
 }
@@ -33,6 +41,8 @@ export type ProjectCreateDto = {
     name: string
     timeline: Timeline[]
 }
+
+export type ProjectPatchDto = Partial<ProjectCreateDto>
 
 export type Project = {
     _id: string
