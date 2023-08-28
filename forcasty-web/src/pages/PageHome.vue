@@ -17,9 +17,7 @@ const projects = ref<Project[]>()
 const loadProjects = async () => {
     const token = await auth.currentUser?.getIdToken()
     if(!token) return
-    const data = await forcastyApi.projects.get({
-        owner: auth.currentUser?.uid
-    }, token);
+    const data = await forcastyApi.projects.get({}, token);
     projects.value = data
 }
 

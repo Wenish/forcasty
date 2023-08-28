@@ -10,10 +10,10 @@
                         <label class="label">
                             <span class="label-text">Email</span>
                         </label>
-                        <input v-model="newMemberEmail" :disabled="isSubmitting" type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
+                        <input v-model="newMemberEmail" :disabled="!isFormEditable" type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
                     </div>
                     <div class="flex items-end">
-                        <button @click="addNewMember" :disabled="isSubmitting" class="btn btn-primary">Add</button>
+                        <button @click="addNewMember" :disabled="!isFormEditable" class="btn btn-primary">Add</button>
                     </div>
                 </div>
             </div>
@@ -31,12 +31,12 @@
                             <td>{{ member.email }}</td>
                             <td>
                                 <label>
-                                    <input @click="updateMemberPermission(member, Permission.EDITOR)" :disabled="isSubmitting" :checked="member.permissions.includes(Permission.EDITOR)" type="checkbox"
+                                    <input @click="updateMemberPermission(member, Permission.EDITOR)" :disabled="!isFormEditable" :checked="member.permissions.includes(Permission.EDITOR)" type="checkbox"
                                         class="checkbox" />
                                 </label>
                             </td>
                             <td>
-                                <ButtonDelete class="btn-xs" :disabled="isSubmitting" :onDelete="() => onDeleteMember(member)">Remove</ButtonDelete>
+                                <ButtonDelete class="btn-xs" :disabled="!isFormEditable" :onDelete="() => onDeleteMember(member)">Remove</ButtonDelete>
                             </td>
                         </tr>
 
@@ -48,15 +48,30 @@
 </template>
 <script setup lang="ts">
 import { getAuth } from 'firebase/auth';
-import { defineAsyncComponent, ref } from 'vue';
+import { computed, defineAsyncComponent, ref } from 'vue';
 import { forcastyApi, Member, Project, Permission } from '../api/forcasty.api';
+import { useAuth } from '@vueuse/firebase/useAuth.mjs';
 
 const ButtonDelete = defineAsyncComponent(() => import('../components/ButtonDelete.vue'))
 
 const auth = getAuth()
 const isLoading = ref(true)
 
+const { user } = useAuth(auth)
+const isUserOwner = computed(() => {
+    return project.value?.owner == user.value?.uid
+})
+const canUpdateProject = computed(() => {
+    const hasUserEditorPermission = project.value?.members.find((member) => member.email == user.value?.email && member.permissions.includes(Permission.EDITOR))
+    return isUserOwner.value || !!hasUserEditorPermission;
+})
+
+
 const isSubmitting = ref(false)
+
+const isFormEditable = computed(() => {
+    return canUpdateProject.value && !isSubmitting.value
+})
 
 const project = ref<Project>()
 
