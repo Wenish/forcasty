@@ -5,7 +5,7 @@
             <input type="checkbox" class="modal-toggle" v-model="isModalOpen" />
             <div class="modal cursor-pointer">
                 <label class="modal-box realtive" for="" ref="modal">
-                    <h3 class="font-bold text-lg">Confirm delete?</h3>
+                    <h3 class="font-bold text-lg">Do you confirm?</h3>
                     <p class="py-4">This can not be undone!</p>
                     <div class="flex gap-2">
                         <input type="checkbox" v-model="canClickYesButton" class="checkbox" />
@@ -25,7 +25,7 @@ import { onClickOutside } from '@vueuse/core';
 import { ref } from 'vue';
 
 const emit = defineEmits<{
-    (e: 'delete'): void
+    (e: 'confirm'): void
 }>()
 
 const modal = ref(null)
@@ -45,7 +45,7 @@ const closeModal = () => {
 
 const onYes = () => {
     closeModal()
-    emit('delete')
+    emit('confirm')
 }
 
 onClickOutside(modal, () => closeModal())

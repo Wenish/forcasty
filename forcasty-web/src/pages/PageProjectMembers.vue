@@ -36,7 +36,7 @@
                                 </label>
                             </td>
                             <td>
-                                <ButtonDelete class="btn-xs" :disabled="!isFormEditable" :onDelete="() => onDeleteMember(member)">Remove</ButtonDelete>
+                                <ButtonConfirm class="btn-xs" :disabled="!isFormEditable" :onConfirm="() => onDeleteMember(member)">Remove</ButtonConfirm>
                             </td>
                         </tr>
 
@@ -52,7 +52,7 @@ import { computed, defineAsyncComponent, ref } from 'vue';
 import { forcastyApi, Member, Project, Permission } from '../api/forcasty.api';
 import { useAuth } from '@vueuse/firebase/useAuth.mjs';
 
-const ButtonDelete = defineAsyncComponent(() => import('../components/ButtonDelete.vue'))
+const ButtonConfirm = defineAsyncComponent(() => import('../components/ButtonConfirm.vue'))
 
 const auth = getAuth()
 const isLoading = ref(true)

@@ -8,8 +8,8 @@
             <div class="flex flex-col sm:flex-row gap-2">
                 <RouterLink :to="`/projects/${id}/edit`" class="btn btn-primary" v-if="canUpdateProject">Edit Project</RouterLink>
                 <RouterLink :to="`/projects/${id}/members`" class="btn btn-secondary">Members</RouterLink>
-                <button v-if="!isUserOwner" @click="leaveProject" class="btn btn-error btn-outline">Leave Project</button>
-                <ButtonDelete :onDelete="onDelete" v-if="canDeleteProject">Delete Project</ButtonDelete>
+                <ButtonConfirm :onConfirm="leaveProject" v-if="!isUserOwner">Leave Project</ButtonConfirm>
+                <ButtonConfirm :onConfirm="onDelete" v-if="canDeleteProject">Delete Project</ButtonConfirm>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@ import { getAuth } from 'firebase/auth';
 import { useAuth } from '@vueuse/firebase/useAuth.mjs';
 
 const ChartForcast = defineAsyncComponent(() => import('../components/ChartForcast.vue'))
-const ButtonDelete = defineAsyncComponent(() => import('../components/ButtonDelete.vue'))
+const ButtonConfirm = defineAsyncComponent(() => import('../components/ButtonConfirm.vue'))
 
 const props = defineProps<{
   id: string
