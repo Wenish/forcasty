@@ -1,12 +1,15 @@
 import { Strategy } from 'passport-http-bearer';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { AuthGuard, PassportStrategy } from '@nestjs/passport';
+import { PassportStrategy } from '@nestjs/passport';
 import * as admin from 'firebase-admin';
 
-export const AUTH_GUARD_BEARER = 'AUTH_GUARD_BEARER'
+export const AUTH_GUARD_BEARER = 'AUTH_GUARD_BEARER';
 
 @Injectable()
-export class BearerStrategy extends PassportStrategy(Strategy, AUTH_GUARD_BEARER) {
+export class BearerStrategy extends PassportStrategy(
+  Strategy,
+  AUTH_GUARD_BEARER,
+) {
   constructor() {
     super();
   }

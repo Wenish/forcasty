@@ -37,15 +37,15 @@ export class ProjectsController {
     @InjectModel(Project.name)
     private readonly projectModel: Model<ProjectDocument>,
     private readonly projectsService: ProjectsService,
-    private readonly caslAbilityFactory: CaslAbilityFactory
+    private readonly caslAbilityFactory: CaslAbilityFactory,
   ) {}
 
   @Post()
   @UseGuards(AuthGuard([AUTH_GUARD_BEARER]))
   @ApiBearerAuth('Bearer Authentication')
   async post(@Body() projectCreateDto: ProjectCreateDto, @User() user: User) {
-    const ability = this.caslAbilityFactory.createForUser(user)
-    const canCreateProject = ability.can(Action.CREATE, this.projectModel)
+    const ability = this.caslAbilityFactory.createForUser(user);
+    const canCreateProject = ability.can(Action.CREATE, this.projectModel);
 
     if (!canCreateProject) throw new UnauthorizedException();
 
@@ -63,13 +63,13 @@ export class ProjectsController {
     description: 'userId from the owner of the project',
   })
   async get(@Query() query: ProjectFilterDto, @User() user: User) {
-    const ability = this.caslAbilityFactory.createForUser(user)
-    const canReadProjects = ability.can(Action.READ, this.projectModel)
+    const ability = this.caslAbilityFactory.createForUser(user);
+    const canReadProjects = ability.can(Action.READ, this.projectModel);
 
     if (!canReadProjects) throw new UnauthorizedException();
 
     const filterQuery: FilterQuery<ProjectDocument> = {
-      ...toMongoQuery(ability, this.projectModel, Action.READ)
+      ...toMongoQuery(ability, this.projectModel, Action.READ),
     };
     if (query.owner) {
       filterQuery.owner = query.owner;
@@ -81,11 +81,14 @@ export class ProjectsController {
   @Get(':id')
   @UseGuards(AuthGuard([AUTH_GUARD_BEARER]))
   @ApiBearerAuth('Bearer Authentication')
-  async findOne(@Param('id', ParseObjectIdPipe) id: string, @User() user: User) {
-    const ability = this.caslAbilityFactory.createForUser(user)
+  async findOne(
+    @Param('id', ParseObjectIdPipe) id: string,
+    @User() user: User,
+  ) {
+    const ability = this.caslAbilityFactory.createForUser(user);
     const project = await this.projectsService.findOne(id);
-    
-    const canReadProject = ability.can(Action.READ, project)
+
+    const canReadProject = ability.can(Action.READ, project);
 
     if (!canReadProject) throw new UnauthorizedException();
     if (!project) throw new NotFoundException();
@@ -99,16 +102,19 @@ export class ProjectsController {
   async patch(
     @Param('id', ParseObjectIdPipe) id: string,
     @Body() projectPatchDto: ProjectPatchDto,
-    @User() user: User
+    @User() user: User,
   ) {
-    const ability = this.caslAbilityFactory.createForUser(user)
+    const ability = this.caslAbilityFactory.createForUser(user);
     const project = await this.projectsService.findOne(id);
-    const canUpdateProject = ability.can(Action.UPDATE, project)
+    const canUpdateProject = ability.can(Action.UPDATE, project);
 
     if (!canUpdateProject) throw new UnauthorizedException();
     if (!project) throw new NotFoundException();
 
-    const projectUpdated = await this.projectsService.update(id, projectPatchDto);
+    const projectUpdated = await this.projectsService.update(
+      id,
+      projectPatchDto,
+    );
     return projectUpdated as Project;
   }
 
@@ -116,9 +122,9 @@ export class ProjectsController {
   @UseGuards(AuthGuard([AUTH_GUARD_BEARER]))
   @ApiBearerAuth('Bearer Authentication')
   async remove(@Param('id', ParseObjectIdPipe) id: string, @User() user: User) {
-    const ability = this.caslAbilityFactory.createForUser(user)
+    const ability = this.caslAbilityFactory.createForUser(user);
     const project = await this.projectsService.findOne(id);
-    const canDeleteProject = ability.can(Action.DELETE, project)
+    const canDeleteProject = ability.can(Action.DELETE, project);
 
     if (!canDeleteProject) throw new UnauthorizedException();
     if (!project) throw new NotFoundException();
@@ -133,11 +139,11 @@ export class ProjectsController {
   async postMembers(
     @Param('id', ParseObjectIdPipe) id: string,
     @Body() projectMembersPostDto: ProjectMembersPostDto,
-    @User() user: User
+    @User() user: User,
   ) {
-    const ability = this.caslAbilityFactory.createForUser(user)
+    const ability = this.caslAbilityFactory.createForUser(user);
     const project = await this.projectsService.findOne(id);
-    const canUpdateProject = ability.can(Action.UPDATE, project)
+    const canUpdateProject = ability.can(Action.UPDATE, project);
 
     if (!canUpdateProject) throw new UnauthorizedException();
     if (!project) throw new NotFoundException();
@@ -152,10 +158,13 @@ export class ProjectsController {
   @Get(':id/members')
   @UseGuards(AuthGuard([AUTH_GUARD_BEARER]))
   @ApiBearerAuth('Bearer Authentication')
-  async getMembers(@Param('id', ParseObjectIdPipe) id: string, @User() user: User) {
-    const ability = this.caslAbilityFactory.createForUser(user)
+  async getMembers(
+    @Param('id', ParseObjectIdPipe) id: string,
+    @User() user: User,
+  ) {
+    const ability = this.caslAbilityFactory.createForUser(user);
     const project = await this.projectsService.findOne(id);
-    const canReadProject = ability.can(Action.READ, project)
+    const canReadProject = ability.can(Action.READ, project);
 
     if (!canReadProject) throw new UnauthorizedException();
     if (!project) throw new NotFoundException();
@@ -171,11 +180,11 @@ export class ProjectsController {
     @Param('id', ParseObjectIdPipe) id: string,
     @Param('email') email: string,
     @Body() projectMemberPutDto: ProjectMemberPutDto,
-    @User() user: User
+    @User() user: User,
   ) {
-    const ability = this.caslAbilityFactory.createForUser(user)
+    const ability = this.caslAbilityFactory.createForUser(user);
     const project = await this.projectsService.findOne(id);
-    const canUpdateProject = ability.can(Action.UPDATE, project)
+    const canUpdateProject = ability.can(Action.UPDATE, project);
 
     if (!canUpdateProject) throw new UnauthorizedException();
     if (!project) throw new NotFoundException();
@@ -194,11 +203,11 @@ export class ProjectsController {
   async removeMember(
     @Param('id', ParseObjectIdPipe) id: string,
     @Param('email') email: string,
-    @User() user: User
+    @User() user: User,
   ) {
-    const ability = this.caslAbilityFactory.createForUser(user)
+    const ability = this.caslAbilityFactory.createForUser(user);
     const project = await this.projectsService.findOne(id);
-    const canUpdateProject = ability.can(Action.UPDATE, project)
+    const canUpdateProject = ability.can(Action.UPDATE, project);
 
     if (!canUpdateProject) throw new UnauthorizedException();
     if (!project) throw new NotFoundException();
