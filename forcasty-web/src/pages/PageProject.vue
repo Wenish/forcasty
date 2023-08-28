@@ -3,7 +3,6 @@
         <div v-if="!isLoading" class="grid gap-4">
             <div>
                 <h1 class="font-bold text-4xl">Project: {{ project?.name }}</h1>
-                <div class="font-bold text-sm">id: {{ id }}</div>
             </div>
             <ChartForcast v-if="project?.timeline" :data="project?.timeline" />
             <div class="flex flex-col sm:flex-row gap-2">

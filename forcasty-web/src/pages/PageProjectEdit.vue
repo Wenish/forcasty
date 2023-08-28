@@ -2,8 +2,7 @@
     <div>
         <div v-if="!isLoading" class="grid gap-4">
             <div>
-                <h1 class="font-bold text-4xl">Project - Edit: {{ project?.name }}</h1>
-                <div class="font-bold text-sm">id: {{ id }}</div>
+                <h1 class="font-bold text-4xl">Project: {{ project?.name }} - Edit </h1>
             </div>
             <div class="grid gap-4 w-full max-w-md mx-auto">
                 <ProjectForm v-model:name="formData.name" v-model:timeline="formData.timeline" :disabled="isSubmitting" />
