@@ -1,8 +1,11 @@
 <template>
     <div>
-        <div v-if="!isLoading" class="grid gap-4">
+        <div v-if="!isLoading" class="grid gap-4  w-full max-w-md mx-auto">
             <div>
-                <h1 class="font-bold text-4xl">Project: {{ project?.name }} - Edit </h1>
+                <h1>
+                    <RouterLink :to="`/projects/${id}`" class="hover:underline">{{ project?.name }}</RouterLink>
+                </h1>
+                <div class="font-bold text-2xl">Edit</div>
             </div>
             <div class="grid gap-4 w-full max-w-md mx-auto">
                 <ProjectForm v-model:name="formData.name" v-model:timeline="formData.timeline" :disabled="isSubmitting" />

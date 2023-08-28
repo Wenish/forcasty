@@ -1,6 +1,9 @@
 <template>
     <div class="grid gap-4 w-full max-w-md mx-auto">
-        <h1>Project - New</h1>
+        <div>
+            <h1>Project</h1>
+            <h2 class="font-bold text-2xl">New</h2>
+        </div>
         <ProjectForm v-model:name="formData.name" v-model:timeline="formData.timeline" :disabled="isSubmitting" />
         <div class="flex justify-end gap-2">
             <button class="btn btn-ghost" :disabled="isSubmitting" @click="resetForm">Reset</button>

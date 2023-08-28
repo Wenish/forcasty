@@ -2,7 +2,10 @@
     <div>
         <div v-if="!isLoading" class="grid gap-4">
             <div>
-                <h1 class="font-bold text-4xl">Project: {{ project?.name }} - Mitglieder</h1>
+                <h1>
+                    <RouterLink :to="`/projects/${id}`" class="hover:underline">{{ project?.name }}</RouterLink>
+                </h1>
+                <div class="font-bold text-2xl">Members</div>
             </div>
             <div>
                 <div class="flex gap-2">
