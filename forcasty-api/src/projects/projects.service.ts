@@ -5,7 +5,7 @@ import { Project, ProjectDocument } from 'src/database/schemas/project.schema';
 import { ProjectCreateDto } from './dtos/projectCreate.dto';
 import { ProjectPatchDto } from './dtos/projectPatch.dto';
 import { ProjectMembersPostDto } from './dtos/projectMembersPost.dto';
-import { ProjectMemberPatchDto } from './dtos/projectMemberPatch.dto';
+import { ProjectMemberPutDto } from './dtos/projectMemberPut.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -85,7 +85,7 @@ export class ProjectsService {
   async updateMember(
     id: string,
     email: string,
-    projectMemberPatch: ProjectMemberPatchDto,
+    projectMemberPutDto: ProjectMemberPutDto,
   ) {
     const project = await this.projectModel.findOneAndUpdate(
       {
@@ -94,7 +94,7 @@ export class ProjectsService {
       },
       {
         $set: {
-          'members.$.permissions': projectMemberPatch.permissions,
+          'members.$.permissions': projectMemberPutDto.permissions,
         },
       },
       {

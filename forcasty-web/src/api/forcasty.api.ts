@@ -50,6 +50,37 @@ export const forcastyApi = {
                 })
                 return data
             },
+            members: {
+                post: async (id: string, body: ProjectMembersPostDto, token: string) => {
+                    const url = `${baseUrl}/${id}/members`
+                    const { data } = await axios.post<Project>(url, body, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    return data
+                },
+                email: {
+                    put: async (id: string, email: string, body: ProjectMemberPutDto, token: string) => {
+                        const url = `${baseUrl}/${id}/members/${email}`
+                        const { data } = await axios.put<Project>(url, body, {
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        })
+                        return data
+                    },
+                    delete: async (id: string, email: string, token: string) => {
+                        const url = `${baseUrl}/${id}/members/${email}`
+                        const { data } = await axios.delete<Project>(url, {
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        })
+                        return data
+                    }
+                }
+            }
         }
     }
 }
@@ -111,6 +142,10 @@ export type ProjectPatchDto = Partial<ProjectCreateDto>
 
 export type ProjectMembersPostDto = {
     members: Member[]
+}
+
+export type ProjectMemberPutDto = {
+    permissions: Permission[]
 }
 
 export type ProjectFilterDto = {

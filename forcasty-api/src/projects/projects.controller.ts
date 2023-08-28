@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -20,7 +21,7 @@ import { FilterQuery } from 'mongoose';
 import { AUTH_GUARD_BEARER } from 'guards/bearer.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { ProjectMembersPostDto } from './dtos/projectMembersPost.dto';
-import { ProjectMemberPatchDto } from './dtos/projectMemberPatch.dto';
+import { ProjectMemberPutDto } from './dtos/projectMemberPut.dto';
 
 @Controller('projects')
 export class ProjectsController {
@@ -93,18 +94,18 @@ export class ProjectsController {
     return project as Project;
   }
 
-  @Patch(':id/members/:email')
+  @Put(':id/members/:email')
   @UseGuards(AuthGuard([AUTH_GUARD_BEARER]))
   @ApiBearerAuth('Bearer Authentication')
   async patchMember(
     @Param('id', ParseObjectIdPipe) id: string,
     @Param('email') email: string,
-    @Body() projectMemberPatchDto: ProjectMemberPatchDto,
+    @Body() projectMemberPutDto: ProjectMemberPutDto,
   ) {
     const project = await this.projectsService.updateMember(
       id,
       email,
-      projectMemberPatchDto,
+      projectMemberPutDto,
     );
     return project as Project;
   }
