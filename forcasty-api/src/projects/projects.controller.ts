@@ -89,11 +89,11 @@ export class ProjectsController {
     @Param('id', ParseObjectIdPipe) id: string,
     @Body() projectMembersPostDto: ProjectMembersPostDto,
   ) {
-    const project = await this.projectsService.addMembers(
+    const members = await this.projectsService.addMembers(
       id,
       projectMembersPostDto,
     );
-    return project as Project;
+    return members as Member[];
   }
 
   @Get(':id/members')
@@ -112,12 +112,12 @@ export class ProjectsController {
     @Param('email') email: string,
     @Body() projectMemberPutDto: ProjectMemberPutDto,
   ) {
-    const project = await this.projectsService.updateMember(
+    const members = await this.projectsService.updateMember(
       id,
       email,
       projectMemberPutDto,
     );
-    return project as Project;
+    return members as Member[];
   }
 
   @Delete(':id/members/:email')
@@ -127,7 +127,7 @@ export class ProjectsController {
     @Param('id', ParseObjectIdPipe) id: string,
     @Param('email') email: string,
   ) {
-    const project = await this.projectsService.removeMember(id, email);
-    return project as Project;
+    const members = await this.projectsService.removeMember(id, email);
+    return members as Member[];
   }
 }

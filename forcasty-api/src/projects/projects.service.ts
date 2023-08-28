@@ -79,7 +79,7 @@ export class ProjectsService {
       },
     );
 
-    return project;
+    return project.members;
   }
 
   async getMembers(id: string) {
@@ -107,7 +107,7 @@ export class ProjectsService {
         new: true,
       },
     );
-    return project;
+    return project.members;
   }
 
   async removeMember(id: string, email: string) {
@@ -122,6 +122,6 @@ export class ProjectsService {
       },
       { new: true },
     );
-    return project;
+    return project.members;
   }
 }

@@ -53,7 +53,16 @@ export const forcastyApi = {
             members: {
                 post: async (id: string, body: ProjectMembersPostDto, token: string) => {
                     const url = `${baseUrl}/${id}/members`
-                    const { data } = await axios.post<Project>(url, body, {
+                    const { data } = await axios.post<Member[]>(url, body, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    return data
+                },
+                get: async (id: string, token: string) => {
+                    const url = `${baseUrl}/${id}/members`
+                    const { data } = await axios.get<Member[]>(url, {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
@@ -63,7 +72,7 @@ export const forcastyApi = {
                 email: {
                     put: async (id: string, email: string, body: ProjectMemberPutDto, token: string) => {
                         const url = `${baseUrl}/${id}/members/${email}`
-                        const { data } = await axios.put<Project>(url, body, {
+                        const { data } = await axios.put<Member[]>(url, body, {
                             headers: {
                                 'Authorization': `Bearer ${token}`
                             }
@@ -72,7 +81,7 @@ export const forcastyApi = {
                     },
                     delete: async (id: string, email: string, token: string) => {
                         const url = `${baseUrl}/${id}/members/${email}`
-                        const { data } = await axios.delete<Project>(url, {
+                        const { data } = await axios.delete<Member[]>(url, {
                             headers: {
                                 'Authorization': `Bearer ${token}`
                             }
