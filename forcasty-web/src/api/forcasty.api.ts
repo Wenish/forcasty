@@ -50,6 +50,17 @@ export const forcastyApi = {
                 })
                 return data
             },
+            leave: {
+                post: async (id: string, token: string) => {
+                    const url = `${baseUrl}/${id}/leave`
+                    const { data } = await axios.post<string>(url, undefined, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    return data
+                }
+            },
             members: {
                 post: async (id: string, body: ProjectMembersPostDto, token: string) => {
                     const url = `${baseUrl}/${id}/members`

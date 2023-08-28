@@ -8,6 +8,7 @@
             <div class="flex flex-col sm:flex-row gap-2">
                 <RouterLink :to="`/projects/${id}/edit`" class="btn btn-primary" v-if="canUpdateProject">Edit Project</RouterLink>
                 <RouterLink :to="`/projects/${id}/members`" class="btn btn-secondary">Members</RouterLink>
+                <button v-if="!isUserOwner" @click="leaveProject" class="btn btn-error btn-outline">Leave Project</button>
                 <ButtonDelete :onDelete="onDelete" v-if="canDeleteProject">Delete Project</ButtonDelete>
             </div>
         </div>
@@ -51,6 +52,19 @@ const loadProject = async () => {
     if(!token) return
     project.value = await forcastyApi.projects.id.get(props.id, token)
     isLoading.value = false
+}
+
+const leaveProject = async () => {
+    const token = await auth.currentUser?.getIdToken()
+    if(!token) return
+
+    try {
+        const hallo = await forcastyApi.projects.id.leave.post(props.id, token)
+        console.log(hallo)
+        router.push('/')
+    } catch {
+
+    }
 }
 
 const onDelete = async () => {

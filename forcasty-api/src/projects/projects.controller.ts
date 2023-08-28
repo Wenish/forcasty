@@ -133,6 +133,23 @@ export class ProjectsController {
     return projectDeleted as Project;
   }
 
+  @Post(':id/leave')
+  @UseGuards(AuthGuard([AUTH_GUARD_BEARER]))
+  @ApiBearerAuth('Bearer Authentication')
+  async postProjectLeave(
+    @Param('id', ParseObjectIdPipe) id: string,
+    @User() user: User,
+  ) {
+    const ability = this.caslAbilityFactory.createForUser(user);
+    const project = await this.projectsService.findOne(id);
+    const canReadProject = ability.can(Action.READ, project);
+
+    if (!canReadProject) throw new UnauthorizedException();
+    if (!project) throw new NotFoundException();
+
+    await this.projectsService.removeMember(id, user.email);
+  }
+
   @Post(':id/members')
   @UseGuards(AuthGuard([AUTH_GUARD_BEARER]))
   @ApiBearerAuth('Bearer Authentication')
