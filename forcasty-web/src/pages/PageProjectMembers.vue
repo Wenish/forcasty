@@ -22,7 +22,6 @@
                     <thead>
                         <tr>
                             <td>E-Mail</td>
-                            <td>Read</td>
                             <td>Editor</td>
                             <td></td>
                         </tr>
@@ -30,12 +29,6 @@
                     <tbody>
                         <tr v-for="member in members" :key="member.email">
                             <td>{{ member.email }}</td>
-                            <td>
-                                <label>
-                                    <input @click="updateMemberPermission(member, Permission.READ)" :disabled="isSubmitting" :checked="member.permissions.includes(Permission.READ)" type="checkbox"
-                                        class="checkbox" />
-                                </label>
-                            </td>
                             <td>
                                 <label>
                                     <input @click="updateMemberPermission(member, Permission.EDITOR)" :disabled="isSubmitting" :checked="member.permissions.includes(Permission.EDITOR)" type="checkbox"

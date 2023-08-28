@@ -2,7 +2,6 @@ import { Prop, Schema } from '@nestjs/mongoose';
 import { ArrayUnique, IsEmail, IsEnum } from 'class-validator';
 
 export enum Permission {
-  READ = 'Read',
   EDITOR = 'Editor',
 }
 

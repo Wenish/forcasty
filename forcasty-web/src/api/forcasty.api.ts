@@ -120,7 +120,6 @@ export type Timeline = {
 }
 
 export enum Permission {
-    READ = 'Read',
     EDITOR = 'Editor'
 }
 
