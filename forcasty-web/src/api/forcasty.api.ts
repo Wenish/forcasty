@@ -79,16 +79,21 @@ export type Timeline = {
     done: number
 }
 
+export enum Permission {
+    READ = 'Read',
+    EDITOR = 'Editor'
+}
+
+export type Member = {
+    email: string
+    permissions: Permission[]
+}
+
 export type ProjectCreateDto = {
     owner: string
     name: string
     timeline: Timeline[]
-}
-
-export type ProjectPatchDto = Partial<ProjectCreateDto>
-
-export type ProjectFilterDto = {
-    owner?: string
+    members: Member[]
 }
 
 export type Project = {
@@ -99,4 +104,15 @@ export type Project = {
     owner: string
     name: string
     timeline: Timeline[]
+    members: Member[]
+}
+
+export type ProjectPatchDto = Partial<ProjectCreateDto>
+
+export type ProjectMembersPostDto = {
+    members: Member[]
+}
+
+export type ProjectFilterDto = {
+    owner?: string
 }

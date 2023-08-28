@@ -3,6 +3,7 @@ import { Timeline } from './timeline.schema';
 import { Document } from 'mongoose';
 import { IsArray, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
+import { Member } from './member.schema';
 
 export type ProjectDocument = Project & Document;
 
@@ -34,6 +35,12 @@ export class Project extends Document {
   @ValidateNested({ each: true })
   @Type(() => Timeline)
   timeline: Timeline[];
+
+  @Prop([Member])
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => Member)
+  members: Member[];
 }
 
 export const ProjectSchema = SchemaFactory.createForClass(Project);

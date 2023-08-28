@@ -50,6 +50,14 @@ const router = createRouter({
           },
           props: true,
         },
+        {
+          path: 'members',
+          component: () => import('./pages/PageProjectMembers.vue'),
+          meta: {
+            requiresAuth: true
+          },
+          props: true,
+        },
       ],
     },
     {

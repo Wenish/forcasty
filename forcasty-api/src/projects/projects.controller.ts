@@ -19,6 +19,7 @@ import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { FilterQuery } from 'mongoose';
 import { AUTH_GUARD_BEARER } from 'guards/bearer.guard';
 import { AuthGuard } from '@nestjs/passport';
+import { ProjectMembersPostDto } from './dtos/projectMembersPost.dto';
 
 @Controller('projects')
 export class ProjectsController {
@@ -74,6 +75,31 @@ export class ProjectsController {
   @ApiBearerAuth('Bearer Authentication')
   async remove(@Param('id', ParseObjectIdPipe) id: string) {
     const project = await this.projectsService.remove(id);
+    return project as Project;
+  }
+
+  @Post(':id/members')
+  @UseGuards(AuthGuard([AUTH_GUARD_BEARER]))
+  @ApiBearerAuth('Bearer Authentication')
+  async postMembers(
+    @Param('id', ParseObjectIdPipe) id: string,
+    @Body() projectMembersPostDto: ProjectMembersPostDto,
+  ) {
+    const project = await this.projectsService.addMembers(
+      id,
+      projectMembersPostDto,
+    );
+    return project as Project;
+  }
+
+  @Delete(':id/members/:email')
+  @UseGuards(AuthGuard([AUTH_GUARD_BEARER]))
+  @ApiBearerAuth('Bearer Authentication')
+  async removeMember(
+    @Param('id', ParseObjectIdPipe) id: string,
+    @Param('email') email: string,
+  ) {
+    const project = await this.projectsService.removeMember(id, email);
     return project as Project;
   }
 }

@@ -4,6 +4,7 @@ import { FilterQuery, Model, SortOrder } from 'mongoose';
 import { Project, ProjectDocument } from 'src/database/schemas/project.schema';
 import { ProjectCreateDto } from './dtos/projectCreate.dto';
 import { ProjectPatchDto } from './dtos/projectPatch.dto';
+import { ProjectMembersPostDto } from './dtos/projectMembersPost.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -53,5 +54,45 @@ export class ProjectsService {
 
   async remove(id: string) {
     return await this.projectModel.findByIdAndRemove(id);
+  }
+
+  async addMembers(id: string, projectMembersPostDto: ProjectMembersPostDto) {
+    const projectCurrent = await this.findOne(id);
+
+    const newMembersToAdd = projectMembersPostDto.members.filter(
+      (member) =>
+        !projectCurrent.members.find(
+          (currentMember) => currentMember.email == member.email,
+        ),
+    );
+    console.log(newMembersToAdd);
+    const project = await this.projectModel.findByIdAndUpdate(
+      id,
+      {
+        $addToSet: {
+          members: newMembersToAdd,
+        },
+      },
+      {
+        new: true,
+      },
+    );
+
+    return project;
+  }
+
+  async removeMember(id: string, email: string) {
+    const project = await this.projectModel.findByIdAndUpdate(
+      id,
+      {
+        $pull: {
+          members: {
+            email: email,
+          },
+        },
+      },
+      { new: true },
+    );
+    return project;
   }
 }

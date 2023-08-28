@@ -13,9 +13,10 @@ async function bootstrap() {
     getAnalytics(appFirebase);
     const auth = getAuth()
     await new Promise((resolve) => {
-      const unsub = auth.onAuthStateChanged((user) => {
+      const unsub = auth.onAuthStateChanged(async (user) => {
         unsub()
         resolve(user)
+        sessionStorage.setItem('token', await user?.getIdToken() || '')
       })
     })
     const pinia = createPinia()

@@ -6,9 +6,10 @@
                 <div class="font-bold text-sm">id: {{ id }}</div>
             </div>
             <ChartForcast v-if="project?.timeline" :data="project?.timeline" />
-            <div class="flex gap-2">
-                <ButtonDelete :onDelete="onDelete">Delete Project</ButtonDelete>
+            <div class="flex flex-col sm:flex-row gap-2">
                 <RouterLink :to="`/projects/${id}/edit`" class="btn btn-primary">Edit Project</RouterLink>
+                <RouterLink :to="`/projects/${id}/members`" class="btn btn-secondary">Members</RouterLink>
+                <ButtonDelete :onDelete="onDelete">Delete Project</ButtonDelete>
             </div>
         </div>
     </div>

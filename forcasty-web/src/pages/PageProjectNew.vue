@@ -34,7 +34,8 @@ const formData = reactive<ProjectCreateDto>({
             effort: 0,
             done: 0
         }
-    ]
+    ],
+    members: []
 })
 
 const resetForm = () => {
