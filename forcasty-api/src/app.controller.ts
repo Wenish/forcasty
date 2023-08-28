@@ -1,6 +1,6 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { AUTH_GUARD_ANONYMOUS } from 'guards/anonymous.guard';
+import { AUTH_GUARD_ANONYMOUS } from 'src/guards/anonymous.guard';
 
 @Controller()
 export class AppController {

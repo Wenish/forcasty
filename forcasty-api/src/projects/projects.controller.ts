@@ -18,7 +18,7 @@ import { ProjectPatchDto } from './dtos/projectPatch.dto';
 import { ProjectFilterDto } from './dtos/projectFilter.dto';
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { FilterQuery } from 'mongoose';
-import { AUTH_GUARD_BEARER } from 'guards/bearer.guard';
+import { AUTH_GUARD_BEARER } from 'src/guards/bearer.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { ProjectMembersPostDto } from './dtos/projectMembersPost.dto';
 import { ProjectMemberPutDto } from './dtos/projectMemberPut.dto';
