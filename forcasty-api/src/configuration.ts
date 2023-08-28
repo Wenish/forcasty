@@ -6,4 +6,9 @@ export default () => ({
       name: process.env.DATABASE_MONGODB_NAME || 'forcasty',
     },
   },
+  firebase: {
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY,
+  },
 });
