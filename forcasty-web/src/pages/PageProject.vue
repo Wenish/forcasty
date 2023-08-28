@@ -6,17 +6,18 @@
             </div>
             <ChartForcast v-if="project?.timeline" :data="project?.timeline" />
             <div class="flex flex-col sm:flex-row gap-2">
-                <RouterLink :to="`/projects/${id}/edit`" class="btn btn-primary" v-if="canUpdateProject">Edit Project</RouterLink>
-                <RouterLink :to="`/projects/${id}/members`" class="btn btn-secondary">Members</RouterLink>
-                <ButtonConfirm :onConfirm="leaveProject" v-if="!isUserOwner">Leave Project</ButtonConfirm>
-                <ButtonConfirm :onConfirm="onDelete" v-if="canDeleteProject">Delete Project</ButtonConfirm>
+                <RouterLink :to="`/projects/${id}/edit`" class="btn btn-primary" :class="{'btn-disabled': isSubmitting}" v-if="canUpdateProject">Edit Project</RouterLink>
+                <RouterLink :to="`/projects/${id}/members`" class="btn btn-secondary" :class="{'btn-disabled': isSubmitting}">Members</RouterLink>
+                <ButtonConfirm :onConfirm="leaveProject" v-if="!isUserOwner" :disabled="isSubmitting">Leave Project</ButtonConfirm>
+                <button class="btn btn-secondary" @click="cloneProject" :disabled="isSubmitting">Clone Project</button>
+                <ButtonConfirm :onConfirm="onDelete" v-if="canDeleteProject" :disabled="isSubmitting">Delete Project</ButtonConfirm>
             </div>
         </div>
     </div>
 </template>
 <script setup lang="ts">
 import { computed, defineAsyncComponent, ref } from 'vue';
-import { Permission, forcastyApi } from '../api/forcasty.api';
+import { Permission, ProjectCreateDto, forcastyApi } from '../api/forcasty.api';
 import { useRouter } from 'vue-router';
 import { getAuth } from 'firebase/auth';
 import { useAuth } from '@vueuse/firebase/useAuth.mjs';
@@ -42,6 +43,7 @@ const canDeleteProject = computed(() => {
     return isUserOwner.value;
 })
 const isLoading = ref(true)
+const isSubmitting = ref(false)
 
 const router = useRouter()
 
@@ -59,23 +61,43 @@ const leaveProject = async () => {
     if(!token) return
 
     try {
-        const hallo = await forcastyApi.projects.id.leave.post(props.id, token)
-        console.log(hallo)
+        await forcastyApi.projects.id.leave.post(props.id, token)
         router.push('/')
     } catch {
 
     }
 }
 
-const onDelete = async () => {
-    const token = await auth.currentUser?.getIdToken()
-    if(!token) return
-
+const cloneProject = async () => {
+    isSubmitting.value = true
     try {
+        if (!project.value) return
+        const token = await auth.currentUser?.getIdToken()
+        if (!token) return
+        if (!auth.currentUser?.uid) return
+
+        const projectCreateDto: ProjectCreateDto = {
+            owner: auth.currentUser.uid,
+            name: `${project.value.name} Clone`,
+            timeline: project.value.timeline,
+            members: project.value.members
+        }
+        const newProject = await forcastyApi.projects.post(projectCreateDto, token)
+        router.push(`/projects/${newProject._id}`)
+    } finally {
+        isSubmitting.value = false
+    }
+}
+
+const onDelete = async () => {
+    isSubmitting.value = true
+    try {
+        const token = await auth.currentUser?.getIdToken()
+        if(!token) return
         await forcastyApi.projects.id.delete(props.id, token);
         router.push('/')
-    } catch {
-
+    } finally {
+        isSubmitting.value = false
     }
 }
 
