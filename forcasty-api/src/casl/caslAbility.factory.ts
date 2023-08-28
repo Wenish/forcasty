@@ -21,10 +21,11 @@ export class CaslAbilityFactory {
   createForUser(user: User) {
     const { can, build } = new AbilityBuilder(createMongoAbility);
     if (user) {
+      const userEmail = user.email.toLocaleLowerCase();
       can(Action.READ, this.projectModel, {
         members: {
           $elemMatch: {
-            email: user.email,
+            email: userEmail,
           },
         },
       });
@@ -32,8 +33,10 @@ export class CaslAbilityFactory {
       can(Action.UPDATE, this.projectModel, {
         members: {
           $elemMatch: {
-            email: user.email,
-            permissions: [Permission.EDITOR],
+            email: userEmail,
+            permissions: {
+              $in: [Permission.EDITOR],
+            },
           },
         },
       });

@@ -60,13 +60,20 @@ export class ProjectsService {
   async addMembers(id: string, projectMembersPostDto: ProjectMembersPostDto) {
     const projectCurrent = await this.findOne(id);
 
-    const newMembersToAdd = projectMembersPostDto.members.filter(
-      (member) =>
-        !projectCurrent.members.find(
-          (currentMember) => currentMember.email == member.email,
-        ),
-    );
-    console.log(newMembersToAdd);
+    const newMembersToAdd = projectMembersPostDto.members
+      .filter(
+        (member) =>
+          !projectCurrent.members.find(
+            (currentMember) => currentMember.email == member.email,
+          ),
+      )
+      .map((newMember) => {
+        return {
+          ...newMember,
+          email: newMember.email.toLocaleLowerCase(),
+        };
+      });
+
     const project = await this.projectModel.findByIdAndUpdate(
       id,
       {
