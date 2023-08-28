@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { FilterQuery, Model, SortOrder } from 'mongoose';
+import { FilterQuery, Model, SortOrder, Types } from 'mongoose';
 import { Project, ProjectDocument } from 'src/database/schemas/project.schema';
 import { ProjectCreateDto } from './dtos/projectCreate.dto';
 import { ProjectPatchDto } from './dtos/projectPatch.dto';
 import { ProjectMembersPostDto } from './dtos/projectMembersPost.dto';
+import { ProjectMemberPatchDto } from './dtos/projectMemberPatch.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -78,6 +79,28 @@ export class ProjectsService {
       },
     );
 
+    return project;
+  }
+
+  async updateMember(
+    id: string,
+    email: string,
+    projectMemberPatch: ProjectMemberPatchDto,
+  ) {
+    const project = await this.projectModel.findOneAndUpdate(
+      {
+        _id: new Types.ObjectId(id),
+        'members.email': email,
+      },
+      {
+        $set: {
+          'members.$.permissions': projectMemberPatch.permissions,
+        },
+      },
+      {
+        new: true,
+      },
+    );
     return project;
   }
 
