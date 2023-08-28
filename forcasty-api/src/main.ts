@@ -22,6 +22,17 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('forcasty-api')
     .setVersion('1.0.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'Enter Firebase JWT token',
+        in: 'header',
+      },
+      'Firebase Authentication',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
