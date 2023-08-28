@@ -22,6 +22,7 @@ import { AUTH_GUARD_BEARER } from 'guards/bearer.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { ProjectMembersPostDto } from './dtos/projectMembersPost.dto';
 import { ProjectMemberPutDto } from './dtos/projectMemberPut.dto';
+import { Member } from 'src/database/schemas/member.schema';
 
 @Controller('projects')
 export class ProjectsController {
@@ -92,6 +93,14 @@ export class ProjectsController {
       projectMembersPostDto,
     );
     return project as Project;
+  }
+
+  @Get(':id/members')
+  @UseGuards(AuthGuard([AUTH_GUARD_BEARER]))
+  @ApiBearerAuth('Bearer Authentication')
+  async getMembers(@Param('id', ParseObjectIdPipe) id: string) {
+    const members = await this.projectsService.getMembers(id);
+    return members as Member[];
   }
 
   @Put(':id/members/:email')

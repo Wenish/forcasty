@@ -82,6 +82,12 @@ export class ProjectsService {
     return project;
   }
 
+  async getMembers(id: string) {
+    const project = await this.projectModel.findById(id);
+    const members = project.members;
+    return members;
+  }
+
   async updateMember(
     id: string,
     email: string,
