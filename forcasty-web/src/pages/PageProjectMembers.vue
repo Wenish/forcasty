@@ -62,7 +62,7 @@ const isUserOwner = computed(() => {
     return project.value?.owner == user.value?.uid
 })
 const canUpdateProject = computed(() => {
-    const hasUserEditorPermission = project.value?.members.find((member) => member.email == user.value?.email && member.permissions.includes(Permission.EDITOR))
+    const hasUserEditorPermission = members.value?.find((member) => member.email == user.value?.email && member.permissions.includes(Permission.EDITOR))
     return isUserOwner.value || !!hasUserEditorPermission;
 })
 
