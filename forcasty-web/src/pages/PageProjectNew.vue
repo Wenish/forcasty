@@ -47,9 +47,10 @@ const resetForm = () => {
 
 const submitForm = async () => {
     isSubmitting.value = true
-
+    const token = await auth.currentUser?.getIdToken()
+    if(!token) return
     try {
-        const project = await forcastyApi.projects.post(formData)
+        const project = await forcastyApi.projects.post(formData, token)
         router.push(`/projects/${project._id}`)
         
     } finally {

@@ -23,6 +23,7 @@
 import { defineAsyncComponent, reactive, ref } from 'vue';
 import { Timeline, forcastyApi } from '../api/forcasty.api';
 import { useRouter } from 'vue-router';
+import { getAuth } from 'firebase/auth';
 
 const ProjectForm = defineAsyncComponent(() => import('../components/ProjectForm.vue'))
 const IconArrowRight = defineAsyncComponent(() => import('../components/IconArrowRight.vue'))
@@ -31,6 +32,7 @@ const props = defineProps<{
     id: string
 }>()
 
+const auth = getAuth()
 const router = useRouter()
 const isLoading = ref(true)
 const isSubmitting = ref(false)
@@ -51,7 +53,9 @@ const formData = reactive<{
 const project = ref<Awaited<ReturnType<typeof forcastyApi.projects.id.get>>>()
 
 const loadProject = async () => {
-    const response = await forcastyApi.projects.id.get(props.id)
+    const token = await auth.currentUser?.getIdToken()
+    if(!token) return
+    const response = await forcastyApi.projects.id.get(props.id, token)
     project.value = response
     formData.name = project.value.name
     formData.timeline = JSON.parse(JSON.stringify((project.value.timeline)))
@@ -72,9 +76,10 @@ const resetForm = () => {
 
 const submitForm = async () => {
     isSubmitting.value = true
-
+    const token = await auth.currentUser?.getIdToken()
+    if(!token) return
     try {
-        const project = await forcastyApi.projects.id.patch(props.id, formData)
+        const project = await forcastyApi.projects.id.patch(props.id, formData, token)
         router.push(`/projects/${project._id}`)
 
     } finally {

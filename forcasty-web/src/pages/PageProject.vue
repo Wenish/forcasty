@@ -17,6 +17,7 @@
 import { defineAsyncComponent, ref } from 'vue';
 import { forcastyApi } from '../api/forcasty.api';
 import { useRouter } from 'vue-router';
+import { getAuth } from 'firebase/auth';
 
 const ChartForcast = defineAsyncComponent(() => import('../components/ChartForcast.vue'))
 const ButtonDelete = defineAsyncComponent(() => import('../components/ButtonDelete.vue'))
@@ -25,6 +26,7 @@ const props = defineProps<{
   id: string
 }>()
 
+const auth = getAuth()
 const isLoading = ref(true)
 
 const router = useRouter()
@@ -32,14 +34,18 @@ const router = useRouter()
 const project = ref<Awaited<ReturnType<typeof forcastyApi.projects.id.get>>>()
 
 const loadProject = async () => {
-    project.value = await forcastyApi.projects.id.get(props.id)
+    const token = await auth.currentUser?.getIdToken()
+    if(!token) return
+    project.value = await forcastyApi.projects.id.get(props.id, token)
     isLoading.value = false
 }
 
 const onDelete = async () => {
-    console.log('delete')
+    const token = await auth.currentUser?.getIdToken()
+    if(!token) return
+
     try {
-        await forcastyApi.projects.id.delete(props.id);
+        await forcastyApi.projects.id.delete(props.id, token);
         router.push('/')
     } catch {
 

@@ -4,30 +4,50 @@ const baseUrl = `${import.meta.env.VITE_FORCASTY_API_HOST}/projects`
 
 export const forcastyApi = {
     projects: {
-        post: async (body: ProjectCreateDto) => {
+        post: async (body: ProjectCreateDto, token: string) => {
             const url = `${baseUrl}`
-            const { data } = await axios.post<Project>(url, body)
+            const { data } = await axios.post<Project>(url, body, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
             return data
         },
-        get: async (params: ProjectFilterDto = {}) => {
+        get: async (params: ProjectFilterDto = {}, token: string) => {
             const urlWithParams = new URL(baseUrl)
             urlWithParams.search = objectToSearchParams(params).toString()
             const url = urlWithParams.toString()
             
-            const { data } = await axios.get<Project[]>(url)
+            const { data } = await axios.get<Project[]>(url, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
             return data
         },
         id: {
-            get: async (id: string) => {
-                const { data } = await axios.get<Project>(`${baseUrl}/${id}`)
+            get: async (id: string, token: string) => {
+                const { data } = await axios.get<Project>(`${baseUrl}/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
                 return data
             },
-            patch: async (id: string, body: ProjectPatchDto) => {
-                const { data } = await axios.patch<Project>(`${baseUrl}/${id}`, body)
+            patch: async (id: string, body: ProjectPatchDto, token: string) => {
+                const { data } = await axios.patch<Project>(`${baseUrl}/${id}`, body, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
                 return data
             },
-            delete: async (id: string) => {
-                const { data } = await axios.delete<Project>(`${baseUrl}/${id}`)
+            delete: async (id: string, token: string) => {
+                const { data } = await axios.delete<Project>(`${baseUrl}/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
                 return data
             },
         }
