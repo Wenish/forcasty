@@ -16,7 +16,7 @@ import { Project, ProjectDocument } from 'src/database/schemas/project.schema';
 import { ParseObjectIdPipe } from 'src/pipes/parseObjectId.pipe';
 import { ProjectPatchDto } from './dtos/projectPatch.dto';
 import { ProjectFilterDto } from './dtos/projectFilter.dto';
-import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { FilterQuery } from 'mongoose';
 import { AUTH_GUARD_BEARER } from 'guards/bearer.guard';
 import { AuthGuard } from '@nestjs/passport';
@@ -25,6 +25,7 @@ import { ProjectMemberPutDto } from './dtos/projectMemberPut.dto';
 import { Member } from 'src/database/schemas/member.schema';
 
 @Controller('projects')
+@ApiTags('projects')
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
