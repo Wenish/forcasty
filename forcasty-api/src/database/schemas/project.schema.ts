@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Timeline } from './timeline.schema';
 import { Document } from 'mongoose';
-import { IsArray, IsString, ValidateNested } from 'class-validator';
+import { IsArray, IsEmail, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Member } from './member.schema';
 
@@ -23,7 +23,7 @@ export class Project extends Document {
   updatedAt: Date;
 
   @Prop()
-  @IsString()
+  @IsEmail()
   owner: string;
 
   @Prop()
