@@ -42,7 +42,7 @@ export class CaslAbilityFactory {
       });
 
       can(Action.MANAGE, this.projectModel, {
-        owner: user.uid,
+        owner: userEmail,
       });
     }
 
