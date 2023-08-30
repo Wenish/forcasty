@@ -33,11 +33,11 @@ const { user } = useAuth(auth)
 const projects = ref<Project[]>()
 
 const myProjects = computed(() => {
-    return projects.value?.filter(project => project.owner == user.value?.uid)
+    return projects.value?.filter(project => project.owner == user.value?.email)
 })
 
 const otherProjects = computed(() => {
-    return projects.value?.filter(project => project.owner != user.value?.uid)
+    return projects.value?.filter(project => project.owner != user.value?.email)
 })
 
 

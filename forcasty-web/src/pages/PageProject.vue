@@ -10,8 +10,8 @@
             <div class="flex flex-col sm:flex-row gap-2">
                 <RouterLink :to="`/projects/${id}/edit`" class="btn btn-primary" :class="{'btn-disabled': isSubmitting}" v-if="canUpdateProject">Edit Project</RouterLink>
                 <RouterLink :to="`/projects/${id}/members`" class="btn btn-secondary" :class="{'btn-disabled': isSubmitting}">Members</RouterLink>
-                <ButtonConfirm :onConfirm="leaveProject" v-if="!isUserOwner" :disabled="isSubmitting">Leave Project</ButtonConfirm>
                 <button class="btn btn-secondary" @click="cloneProject" :disabled="isSubmitting">Clone Project</button>
+                <ButtonConfirm :onConfirm="leaveProject" v-if="!isUserOwner" :disabled="isSubmitting">Leave Project</ButtonConfirm>
                 <ButtonConfirm :onConfirm="onDelete" v-if="canDeleteProject" :disabled="isSubmitting">Delete Project</ButtonConfirm>
             </div>
         </div>
@@ -34,7 +34,7 @@ const props = defineProps<{
 const auth = getAuth()
 const { user } = useAuth(auth)
 const isUserOwner = computed(() => {
-    return project.value?.owner == user.value?.uid
+    return project.value?.owner == user.value?.email
 })
 const canUpdateProject = computed(() => {
     const hasUserEditorPermission = project.value?.members.find((member) => member.email == user.value?.email && member.permissions.includes(Permission.EDITOR))
@@ -76,10 +76,10 @@ const cloneProject = async () => {
         if (!project.value) return
         const token = await auth.currentUser?.getIdToken()
         if (!token) return
-        if (!auth.currentUser?.uid) return
+        if (!auth.currentUser?.email) return
 
         const projectCreateDto: ProjectCreateDto = {
-            owner: auth.currentUser.uid,
+            owner: auth.currentUser.email,
             name: `${project.value.name} Clone`,
             timeline: project.value.timeline,
             members: project.value.members

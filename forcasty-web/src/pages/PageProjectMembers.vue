@@ -8,6 +8,9 @@
                 <div class="font-bold text-2xl">Members</div>
             </div>
             <div>
+                <p>Project Owner: <b>{{ project?.owner }}</b></p>
+            </div>
+            <div>
                 <div class="flex gap-2">
                     <div class="form-control w-full max-w-xs">
                         <label class="label">
@@ -62,7 +65,7 @@ const isLoading = ref(true)
 
 const { user } = useAuth(auth)
 const isUserOwner = computed(() => {
-    return project.value?.owner == user.value?.uid
+    return project.value?.owner == user.value?.email
 })
 const canUpdateProject = computed(() => {
     const hasUserEditorPermission = members.value?.find((member) => member.email == user.value?.email && member.permissions.includes(Permission.EDITOR))
