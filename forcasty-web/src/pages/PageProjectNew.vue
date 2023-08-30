@@ -30,7 +30,7 @@ const auth = getAuth()
 const isSubmitting = ref(false)
 
 const formData = reactive<ProjectCreateDto>({
-    owner: auth.currentUser?.uid || '',
+    owner: auth.currentUser?.email || '',
     name: '',
     timeline: [
         {
