@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Timeline } from './timeline.schema';
 import { Document } from 'mongoose';
-import { IsArray, IsEmail, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsArray, IsEmail, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Member } from './member.schema';
 
