@@ -1,5 +1,6 @@
 import { getAuth } from 'firebase/auth'
 import { createRouter, createWebHistory } from 'vue-router'
+import { getAnalytics, logEvent } from 'firebase/analytics';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -116,6 +117,15 @@ router.beforeEach((to, _from, next) => {
     next()
   }
 })
+
+router.afterEach((to) => {
+  const analytics = getAnalytics()
+  logEvent(analytics, 'page_view', {
+    page_path: to.fullPath,
+    page_title: document.title
+  })
+})
+
 
 export default router
 
