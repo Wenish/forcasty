@@ -50,29 +50,31 @@ onUnmounted(() => {
 })
 </script>
 <style scoped>
+@reference "../style.css";
+
 :deep(.firebaseui-container) {
-  @apply bg-base-100 font-normal shadow-none !important;
+  @apply bg-base-100! font-normal! shadow-none!;
 }
 
 :deep(.firebaseui-title) {
-  @apply text-base-content !important;
+  @apply text-base-content!;
 }
 
 :deep(.firebaseui-text) {
-  @apply text-base-content;
+  @apply text-base-content!;
 }
 
 :deep(.firebaseui-textfield input) {
-  @apply input input-bordered w-full border-solid text-base-content !important;
+  @apply input! w-full! border-solid! text-base-content!;
 }
 
 :deep(.mdl-textfield__label) {
-  @apply text-xs !important;
+  @apply text-xs!;
   top: 4px !important;
 }
 
 :deep(.firebaseui-textfield.mdl-textfield .firebaseui-label::after) {
-  @apply bg-transparent !important;
+  @apply bg-transparent!;
 }
 :deep(.firebaseui-textfield input) {
   outline-width: 0 !important;
@@ -80,15 +82,15 @@ onUnmounted(() => {
 }
 
 :deep(.firebaseui-id-submit) {
-  @apply btn-primary text-primary-content !important;
+  @apply btn! btn-primary! text-primary-content!;
 }
 
 :deep(.firebaseui-id-secondary-link) {
-  @apply btn-ghost text-base-content !important;
+  @apply btn! btn-ghost! text-base-content!;
 }
 
 :deep(.firebaseui-label) {
-  @apply text-base-content !important;
+  @apply text-base-content!;
 }
 
 </style>

@@ -4,7 +4,7 @@
             <h1>Projects</h1>
             <RouterLink
                 to="/project-new"
-                class="bg-primary text-primary-content py-2 px-4 hover:bg-primary-focus group transition-colors duration-300"
+                class="bg-primary text-primary-content py-2 px-4 hover:bg-[color-mix(in_hsl,_var(--color-primary),_#000_7%)] group transition-colors duration-300"
             >
                 <div class="text-sm font-bold pl-0 group-hover:pl-2 transition-all duration-300">New Project</div>
             </RouterLink>
